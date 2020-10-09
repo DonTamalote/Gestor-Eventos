@@ -1,0 +1,140 @@
+<!-- Tablero Eventos-->
+<header id="main-header" class="py-2 bg-info text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h1>
+          <i class="fa fa-cog"></i> Control Eventos
+        </h1>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Botones -->
+<section id="actions" class="py-4 mb-4 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#agregarEventoModal">
+          <i class="fa fa-plus"></i>Agregar Evento
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Listado de Eventos -->
+<section id="eventos">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header">
+            <h4>Listado de Eventos</h4>
+          </div>
+          <table class="table table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th>#</th>
+                <th>Tipo</th>
+                <th>Precio</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let evento of eventos; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{evento.Tipo}}</td>
+                <td>{{evento.Precio | currency: 'MNX': '$'}}</td>
+                <td>
+                  <a routerLink="/eventos/editar/{{evento.id}}" class="btn btn-secondary">
+                    <i class="fa fa-angle-double-right"></i>Editar
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tarjetas Laterales-->
+
+
+      <div class="col-md-3">
+        <div class="card text-center bg-success text-white mb-3">
+          <div class="card-body">
+            <h3>Total de eventos registrados</h3>
+            <h4 class="display-4">
+              <i class="fa fa-users"></i>{{eventos?.length}}</h4>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fin Tarjetas laterales -->
+    </div>
+  </div>
+</section>
+
+<!-- Agregar evento modal -->
+<div class="modal fade" id="agregarEventoModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title">Agregar Eventos</h5>
+        <button class="close" data-dismiss="modal" #botonCerrar>
+          <span>&times;</span>
+        </button>
+      </div>
+
+      <flash-messages></flash-messages>
+
+      <form #eventoForm="ngForm" (ngSubmit)="agregar(eventoForm)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="nombre">Tipo de evento</label>
+            <input
+            type="text"
+            name="Tipo"
+            class="form-control"
+            #Tipo="ngModel"
+            [(ngModel)]="evento.Tipo"
+            [ngClass]="{'is-invalid': Tipo.errors && Tipo.touched}"
+            required
+            minlength="3">
+            <div [hidden]="!Tipo.errors?.required" class="invalid-feedback">
+              Tipo de evento requerido
+            </div>
+            <div [hidden]="!Tipo.errors?.minlength" class="invalid-feedback">
+              Debe contener al menos 3 caracteres
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="Precio">Precio</label>
+            <input
+            type="number"
+            name="Precio"
+            class="form-control"
+            #Precio="ngModel"
+            [(ngModel)]="evento.Precio"
+            [ngClass]="{'is-invalid': Precio.errors && Precio.touched}"
+            required
+            minlength="3">
+            <div [hidden]="!Precio.errors?.required" class="invalid-feedback">
+              Precio requerido
+            </div>
+            <div [hidden]="!Precio.errors?.minlength" class="invalid-feedback">
+              Debe contener al menos 3 números
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

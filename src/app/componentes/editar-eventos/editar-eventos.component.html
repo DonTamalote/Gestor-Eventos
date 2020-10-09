@@ -1,0 +1,93 @@
+<header id="main-header" class="py-2 bg-info text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>
+          <i class="fa fa-user"></i> Editar Eventos
+        </h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<form #eventoForm="ngForm" (ngSubmit)="guardar(eventoForm)">
+
+  <flash-messages></flash-messages>
+
+  <!-- Botones -->
+
+  <section id="actions" class="py-4 mb-4 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <a routerLink='/' class="btn btn-light btn-block">
+            <i class="fa fa-arrow-left"></i> Regresar al inicio
+          </a>
+        </div>
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-success btn-block">
+            <i class="fa fa-check"></i>Guardar Evento
+          </button>
+        </div>
+        <div class="col-md-3">
+          <a href="#" (click)="eliminar()" class="btn btn-danger btn-block">
+            <i class="fa fa-trash"></i> Eliminar Evento
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="details">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <h4>Editar Evento</h4>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="nombre">Tipo de evento</label>
+                <input
+                type="text"
+                name="Tipo"
+                class="form-control"
+                #Tipo="ngModel"
+                [(ngModel)]="evento.Tipo"
+                [ngClass]="{'is-invalid': Tipo.errors && Tipo.touched}" required minlength="3">
+                <div [hidden]="!Tipo.errors?.required" class="invalid-feedback">
+                  Tipo de evento requerido
+                </div>
+                <div [hidden]="!Tipo.errors?.minlength" class="invalid-feedback">
+                  Debe contener al menos 3 caracteres
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="Apellido">Precio</label>
+                <input
+                type="number"
+                name="Precio"
+                class="form-control"
+                #Precio="ngModel"
+                [(ngModel)]="evento.Precio" [ngClass]="{'is-invalid': Precio.errors && Precio.touched}"
+                required
+                minlength="3">
+                <div [hidden]="!Precio.errors?.required" class="invalid-feedback">
+                  Precio requerido
+                </div>
+                <div [hidden]="!Precio.errors?.minlength" class="invalid-feedback">
+                  Debe contener al menos 3 números
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</form>
